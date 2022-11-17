@@ -58,7 +58,7 @@
             arraySize--;
             array = new T[arraySize];
             
-            for (int i = 0, indicesDiff = 0; i < arraySize; i++)
+            for (int i = 0, indicesDiff = 0; i < arraySize + 1; i++)
             {
                 if(i == index)
                 {
@@ -98,6 +98,18 @@
                 }
             }
             return false;
+        }
+
+        public void Remove(T item)
+        {
+            for (int i = 0; i < arraySize; i++)
+            {
+                if(Comparer<T>.Default.Compare(array[i], item) == 0)
+                {
+                    RemoveAt(i);
+                    return;
+                }
+            }
         }
 
         public T[] GetArray()
@@ -161,6 +173,13 @@
 
         Console.WriteLine(test.Contains(666));
 
+        Console.WriteLine("\n_____________\n\nRemove(4)\n");
+
+        test.Remove(4);
+        foreach(int i in test.GetArray()){
+            Console.WriteLine(i);
+        }
+
 //        Console.ReadKey(true);
 
 //------------------------------------
@@ -207,6 +226,13 @@
         Console.WriteLine("\n_____________\n\nContains(\"666\")\n");
 
         Console.WriteLine(test2.Contains("666"));
+
+        Console.WriteLine("\n_____________\n\nRemove(\"4\")\n");
+
+        test2.Remove("4");
+        foreach(string i in test2.GetArray()){
+            Console.WriteLine(i);
+        }
 
         Console.ReadKey(true);
     }
