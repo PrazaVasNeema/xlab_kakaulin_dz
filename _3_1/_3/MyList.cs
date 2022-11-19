@@ -16,7 +16,11 @@ public class MyList<TItem> : IEnumerable<TItem>
         {
             m_array[index] = value;
         }
-    }    
+    }
+    public TItem[] ToArray()
+    {
+        return m_array;
+    }
 
     public MyList(TItem[] array)
     {
@@ -55,10 +59,11 @@ public class MyList<TItem> : IEnumerable<TItem>
             return;
         }
         TItem[] DataArray = arrayData.ToArray<TItem>();
-        TItem[] arrayAssembler = new TItem[Count + DataArray.Length];
+        Count += DataArray.Length;
+        TItem[] arrayAssembler = new TItem[Count];
         Array.Copy(m_array, arrayAssembler, index);
         Array.Copy(DataArray, 0, arrayAssembler, index, DataArray.Length);
-        Array.Copy(m_array, index, arrayAssembler, index + DataArray.Length, Count - index);
+        Array.Copy(m_array, index, arrayAssembler, index + DataArray.Length, Count - index - DataArray.Length);
         m_array = arrayAssembler;
         return;
     }
@@ -120,7 +125,7 @@ public class MyList<TItem> : IEnumerable<TItem>
                     TItem[] arrayAssembler = new TItem[--Count];
                     Array.Copy(m_array, arrayAssembler, i);
                     Array.Copy(m_array, i + 1, arrayAssembler, i, Count - i);
-                    m_array = arrayAssembler;
+                    m_array = arrayAssembler;          
                     return;
                 }
         }
