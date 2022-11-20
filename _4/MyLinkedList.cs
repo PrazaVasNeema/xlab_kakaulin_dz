@@ -66,7 +66,7 @@ public class MyLinkedList<TItem> : IEnumerable<TItem>
         Count++;
     }
 
-    public TItem Pop() // возвращает и удалаяет последний элемент из листа
+    public TItem Pop()
     {
         if(nodeFirst == null)
         {
@@ -186,7 +186,7 @@ public class MyLinkedList<TItem> : IEnumerable<TItem>
         Count--;
     }
 
-    public bool Contains(TItem value) // возвращает и удалаяет последний элемент из листа
+    public bool Contains(TItem value)
     {
         Node current = nodeFirst;
         while(current != null)
