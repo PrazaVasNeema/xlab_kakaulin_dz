@@ -8,7 +8,7 @@ public static class TestingChamber <T>{
             Console.WriteLine(item);
         }
     }
-    public static void TestMyListNonObjects(MyList<T> myList){
+    public static void TestMyList(MyList<T> myList){
         
         T TestingValue = (T)Convert.ChangeType(Constants.TESTING_VALUE,typeof(T));
 

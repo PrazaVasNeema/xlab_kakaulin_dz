@@ -25,14 +25,14 @@ class Program
             myListInt.Add(rnd.Next(100));
         }      
 
-        TestingChamber<int>.TestMyListNonObjects(myListInt);
+        TestingChamber<int>.TestMyList(myListInt);
 
         foreach(string item in Constants.LOREM_IPSUM.Split(' '))
         {
             myListString.Add(item);
         }
 
-        TestingChamber<string>.TestMyListNonObjects(myListString);
+        TestingChamber<string>.TestMyList(myListString);
         
 
         for(int i = 0, temp; i < numberOfValues; i++)
