@@ -2,6 +2,10 @@
 // AddLast, Clear, Remove, RemoveLast, Contains
 // Constants, TestChamber
 // Сравнение по скорости с List
+
+    // Класс с наличием Main, здесь заполняются листы, вызывается их проверка в TestingChamber
+    // и производится сравнение времени прохода с List
+
 using System.Diagnostics;
 class Program
 {
@@ -46,7 +50,7 @@ class Program
 
         Console.WriteLine(Constants.BORDER);
 
-        Console.WriteLine($"/nВремя полного прохода/n");
+        Console.WriteLine($"\nВремя полного прохода\n");
 
         time.Start();
         foreach (int item in myLinkedListInt)

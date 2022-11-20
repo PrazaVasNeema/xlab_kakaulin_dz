@@ -1,3 +1,4 @@
+    // Сам лист
 using System.Collections;
 
 public class MyLinkedList<TItem> : IEnumerable<TItem>

@@ -1,4 +1,5 @@
 
+    // Проверка работы методов (для простых типов и string)
 public static class TestingChamber <T>{
 
     private static void PrintMyList(MyLinkedList<T> myList)
