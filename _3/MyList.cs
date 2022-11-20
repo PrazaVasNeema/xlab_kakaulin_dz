@@ -1,7 +1,10 @@
     // Сам лист
+
     // Заполнение нового массива сначала было написано с применением Array.Copy
     // Время данной реализации оказалось дольше времени работы реализации через for
     // Но заменену произвел только в методах Remove и RemoveAt
+
+    // Реализованы методы: ToArray, Add, Insert, InsertRange, Remove, RemoveAt, Clear, Contains, Sort
 
 using System.Collections;
 
