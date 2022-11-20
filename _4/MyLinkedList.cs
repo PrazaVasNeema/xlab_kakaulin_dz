@@ -1,5 +1,7 @@
     // Сам лист
+
     // Реализованы методы: Push, Pop, Peek, Clear, AddLast, RemoveLast, Remove, Contains
+    
 using System.Collections;
 
 public class MyLinkedList<TItem> : IEnumerable<TItem>
