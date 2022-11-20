@@ -1,6 +1,5 @@
 using System.Collections;
-// TO DO
-// AddLast, Clear, Remove, RemoveLast, Contains
+
 public class MyLinkedList<TItem> : IEnumerable<TItem>
 {
     private class Node
@@ -12,6 +11,22 @@ public class MyLinkedList<TItem> : IEnumerable<TItem>
     public int Count {get; private set;}
     private Node nodeFirst;
     private Node nodeLast;
+    public TItem first
+    {
+        get
+        {
+            return nodeFirst.value;
+        }
+        private set{}
+    }
+    public TItem last
+    {
+        get
+        {
+            return nodeLast.value;
+        }
+        private set{}
+    }
     public MyLinkedList(TItem value)
     {
         AddOnly(value);
@@ -60,9 +75,18 @@ public class MyLinkedList<TItem> : IEnumerable<TItem>
         Node temp = nodeFirst;
         TItem returnValue = nodeFirst.value;
 
-        nodeFirst = nodeFirst.next;
-        nodeFirst.prev = null;
-        temp = null;
+        if(nodeFirst == nodeLast)
+        {
+            nodeFirst = null;
+            nodeLast = null;
+        }
+        else
+        {
+            nodeFirst = nodeFirst.next;
+            nodeFirst.prev = null;
+            temp = null;
+        }
+        Count--;
         return returnValue;
     }
 
@@ -78,13 +102,14 @@ public class MyLinkedList<TItem> : IEnumerable<TItem>
     public void Clear()
     {  
         Node temp;
-        while(nodeFirst.next != null)
+        while(nodeFirst != null && nodeFirst.next != null)
         {
             temp = nodeFirst;
             nodeFirst = nodeFirst.next;
             temp = null;
         }
         nodeFirst = null;
+        Count = 0;
     }
 
     public void AddLast(TItem value)
@@ -112,9 +137,19 @@ public class MyLinkedList<TItem> : IEnumerable<TItem>
         Node temp = nodeLast;
         TItem returnValue = nodeLast.value;
 
-        nodeLast = nodeLast.next;
-        nodeLast.next = null;
-        temp = null;
+        if(nodeFirst == nodeLast)
+        {
+            nodeFirst = null;
+            nodeLast = null;
+        }
+        else
+        {
+            nodeLast = nodeLast.prev;
+            nodeLast.next = null;
+            temp = null;
+        }
+
+        Count--;
         return returnValue;
     }
 
@@ -148,6 +183,7 @@ public class MyLinkedList<TItem> : IEnumerable<TItem>
             }
             current = current.next;
         }
+        Count--;
     }
 
     public bool Contains(TItem value) // возвращает и удалаяет последний элемент из листа
