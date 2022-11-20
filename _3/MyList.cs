@@ -68,54 +68,6 @@ public class MyList<TItem> : IEnumerable<TItem>
         return;
     }
 
-    // public void RemoveTestForLoop(TItem item)
-    // {
-    //     for(int i = 0; i < Count; i++)
-    //     {
-    //         if(Comparer<TItem>.Default.Compare(m_array[i], item) == 0)
-    //             {
-    //                 TItem[] arrayAssembler = new TItem[--Count];
-    //                 for (int j = 0; j < Count; j++)
-    //                 {
-    //                     if(j < i)
-    //                     {
-    //                         arrayAssembler[j] = m_array[j];
-    //                     }
-    //                     else
-    //                     {
-    //                         arrayAssembler[j] = m_array[j - 1];
-    //                     }
-
-    //                 }
-    //                 m_array = arrayAssembler;
-    //                 return;
-    //             }
-    //     }
-    // }
-
-    // public void RemoveTestForLoop2(TItem item)
-    // {
-    //     for(int i = 0; i < Count; i++)
-    //     {
-    //         if(Comparer<TItem>.Default.Compare(m_array[i], item) == 0)
-    //             {
-    //                 TItem[] arrayAssembler = new TItem[--Count];
-    //                 for (int j = 0; j < i; j++)
-    //                 {
-    //                     arrayAssembler[j] = m_array[j];
-    //                 }
-    //                 for (int j = i; j < Count; j++)
-    //                 {
-    //                     arrayAssembler[j] = m_array[j - 1];
-    //                 }
-
-                    
-    //                 m_array = arrayAssembler;
-    //                 return;
-    //             }
-    //     }
-    // }
-
     public void Remove(TItem item)
     {
         for(int i = 0; i < Count; i++)
@@ -123,9 +75,17 @@ public class MyList<TItem> : IEnumerable<TItem>
             if(Comparer<TItem>.Default.Compare(m_array[i], item) == 0)
                 {
                     TItem[] arrayAssembler = new TItem[--Count];
-                    Array.Copy(m_array, arrayAssembler, i);
-                    Array.Copy(m_array, i + 1, arrayAssembler, i, Count - i);
-                    m_array = arrayAssembler;          
+                    for (int j = 0; j < i; j++)
+                    {
+                        arrayAssembler[j] = m_array[j];
+                    }
+                    for (int j = i; j < Count; j++)
+                    {
+                        arrayAssembler[j] = m_array[j + 1];
+                    }
+
+                    
+                    m_array = arrayAssembler;
                     return;
                 }
         }
@@ -139,8 +99,16 @@ public class MyList<TItem> : IEnumerable<TItem>
             return;
         }
         TItem[] arrayAssembler = new TItem[--Count];
-        Array.Copy(m_array, arrayAssembler, index);
-        Array.Copy(m_array, index + 1, arrayAssembler, index, Count - index);
+        // Array.Copy(m_array, arrayAssembler, index);
+        // Array.Copy(m_array, index + 1, arrayAssembler, index, Count - index);
+        for (int j = 0; j < index; j++)
+        {
+            arrayAssembler[j] = m_array[j];
+        }
+        for (int j = index; j < Count; j++)
+        {
+            arrayAssembler[j] = m_array[j + 1];
+        }
         m_array = arrayAssembler;
         return;
     }

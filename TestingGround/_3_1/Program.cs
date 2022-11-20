@@ -56,6 +56,41 @@ class Program
         time.Stop();
         Console.WriteLine($"Remove(10) в List: {time.Elapsed}");
 
+
+
+
+        myListInt.Clear();
+        myListForComparison.Clear();
+        MyList<int> myListInt2 = new MyList<int>();
+
+
+        for(int i = 0, temp; i < numberOfValues; i++)
+        {
+            temp = rnd.Next(100);
+            myListForComparison.Add(temp);
+            myListInt.Add(temp);
+            myListInt2.Add(temp);
+        }
+
+        time.Start();
+        myListForComparison.Remove(10);
+        time.Stop();
+        Console.WriteLine($"Classic: {time.Elapsed}");
+
+        time.Reset();
+
+        time.Start();
+        myListInt.RemoveTestForLoop(10);
+        time.Stop();
+        Console.WriteLine($"RemoveTestForLoop(10) в List: {time.Elapsed}");
+
+        time.Reset();
+
+        time.Start();
+        myListInt2.RemoveTestForLoop2(10);
+        time.Stop();
+        Console.WriteLine($"RemoveTestForLoop2(10) в List: {time.Elapsed}");
+
         Console.ReadKey();
     }
 }
