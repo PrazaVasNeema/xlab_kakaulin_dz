@@ -41,23 +41,34 @@ public class MyList<TItem> : IEnumerable<TItem>
 
     public void Add(TItem item)
     {
-        Array.Copy(m_array, m_array = new TItem[++Count], Count - 1);
-        m_array[Count - 1] = item;
+        TItem[] arrayAssembler = new TItem[++Count];
+        for (int j = 0; j < Count - 1; j++)
+        {
+            arrayAssembler[j] = m_array[j];
+        }
+        arrayAssembler[Count - 1] = item;
+        m_array = arrayAssembler;
     }
 
     public void Insert(Int32 index, TItem item)
     {
-            if(index < 0 || index > Count)
-            {
-                Console.WriteLine("Индекс за границами промежутка");
-                return;
-            }
-            TItem[] arrayAssembler = new TItem[++Count];
-            Array.Copy(m_array, arrayAssembler, index);
-            arrayAssembler[index] = item;
-            Array.Copy(m_array, index, arrayAssembler, index + 1, Count - index - 1);
-            m_array = arrayAssembler;
+        if(index < 0 || index > Count)
+        {
+            Console.WriteLine("Индекс за границами промежутка");
             return;
+        }
+        TItem[] arrayAssembler = new TItem[++Count];
+        for (int j = 0; j < index; j++)
+        {
+            arrayAssembler[j] = m_array[j];
+        }
+        arrayAssembler[index] = item;
+        for (int j = index + 1; j < Count; j++)
+        {
+            arrayAssembler[j] = m_array[j - 1];
+        }
+        m_array = arrayAssembler;
+        return;
     }
 
     public void InsertRange(Int32 index, System.Collections.Generic.IEnumerable<TItem> arrayData)
@@ -70,9 +81,18 @@ public class MyList<TItem> : IEnumerable<TItem>
         TItem[] DataArray = arrayData.ToArray<TItem>();
         Count += DataArray.Length;
         TItem[] arrayAssembler = new TItem[Count];
-        Array.Copy(m_array, arrayAssembler, index);
-        Array.Copy(DataArray, 0, arrayAssembler, index, DataArray.Length);
-        Array.Copy(m_array, index, arrayAssembler, index + DataArray.Length, Count - index - DataArray.Length);
+        for (int j = 0; j < index; j++)
+        {
+            arrayAssembler[j] = m_array[j];
+        }
+        for (int j = index, i = 0; i < DataArray.Length; j++, i++)
+        {
+            arrayAssembler[j] = DataArray[i];
+        }
+        for (int j = index + DataArray.Length, i = index; j < Count; j++, i++)
+        {
+            arrayAssembler[j] = m_array[i];
+        }
         m_array = arrayAssembler;
         return;
     }
@@ -108,8 +128,6 @@ public class MyList<TItem> : IEnumerable<TItem>
             return;
         }
         TItem[] arrayAssembler = new TItem[--Count];
-        // Array.Copy(m_array, arrayAssembler, index);
-        // Array.Copy(m_array, index + 1, arrayAssembler, index, Count - index);
         for (int j = 0; j < index; j++)
         {
             arrayAssembler[j] = m_array[j];
