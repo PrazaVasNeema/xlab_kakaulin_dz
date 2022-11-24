@@ -7,7 +7,7 @@ public static class BubbleSort<T>
         for(int i = 0; i < count - 1; i++)
             for(int j = i + 1; j < count; j++)
             {
-                if(Comparer<T>.Default.Compare(array[i], array[j]) >= 0 )
+                if(Comparer<T>.Default.Compare(array[i], array[j]) >= 0)
                 {
                     temp = array[i];
                     array[i] = array[j];

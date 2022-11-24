@@ -18,9 +18,11 @@ class Program
         MyList<int> myListIntBubbleSort = new MyList<int>();
         MyList<int> myListIntShakerSort = new MyList<int>();
         MyList<int> myListIntInsertionSort = new MyList<int>();
+        MyList<int> myListIntQuickSort = new MyList<int>();
+
         var time = new Stopwatch();
         int numberOfValues;
-        string bubbleTime, shakerTime, insertionTime;
+        string bubbleTime, shakerTime, insertionTime, quickTime;
         Random rnd = new Random();
         bool outputFlag = true;
 
@@ -36,6 +38,7 @@ class Program
             myListIntBubbleSort.Add(temp);
             myListIntShakerSort.Add(temp);
             myListIntInsertionSort.Add(temp);
+            myListIntQuickSort.Add(temp);
         }
 
         Console.WriteLine($"\n{Constants.ORIGINAL_ARRAY}:\n");
@@ -88,9 +91,24 @@ class Program
         time.Reset();
         Console.WriteLine(Constants.BORDER);
 
-        // Сравнение
+        // Быстрая сортировка
 
-        Console.WriteLine($"Сравнение\n\n{Constants.BUBBLE_SORT}: {bubbleTime}\n{Constants.SHAKER_SORT}: {shakerTime}\n{Constants.INSERTION_SORT}: {insertionTime}\n");
+        Console.WriteLine($"\n{Constants.QUICK_SORT}:\n");
+
+        time.Start();
+        QuickSort<int>.Sort(ref myListIntQuickSort);
+        time.Stop();
+        
+        PrintArray(myListIntQuickSort);
+        Console.WriteLine($"\n{Constants.TIME_STATS}: {time.Elapsed}");
+        quickTime = time.Elapsed.ToString();
+
+        time.Reset();
+        Console.WriteLine(Constants.BORDER);
+
+        // Итоговое сравнение сортировок по времени
+
+        Console.WriteLine($"Итоговое сравнение сортировок по времени\n\n{Constants.BUBBLE_SORT}: {bubbleTime}\n{Constants.SHAKER_SORT}: {shakerTime}\n{Constants.INSERTION_SORT}: {insertionTime}\n{Constants.QUICK_SORT}: {quickTime}\n");
 
         Console.ReadKey();
     }

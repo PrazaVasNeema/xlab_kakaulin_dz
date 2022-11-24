@@ -21,6 +21,7 @@
       public const string BUBBLE_SORT = "Сортировка пузырьком";
       public const string SHAKER_SORT = "Шейкерная сортировка";
       public const string INSERTION_SORT = "Сортировка вставками";
+      public const string QUICK_SORT = "Быстрая сортировка";
       public const string TIME_STATS = "Время сортировки";
       public const string UPPER_BORDER = "____________________________\n";
    }
