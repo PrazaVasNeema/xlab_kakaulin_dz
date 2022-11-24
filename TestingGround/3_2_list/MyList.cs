@@ -41,11 +41,13 @@ public class MyList<TItem> : IEnumerable<TItem>
 
     public void Add(TItem item)
     {
-            if (Count == m_array.Length)
-			{
-				Array.Resize(ref m_array, 1 + m_array.Length * 2);
-			}
-			m_array[Count++] = item;
+        TItem[] arrayAssembler = new TItem[++Count];
+        for (int j = 0; j < Count - 1; j++)
+        {
+            arrayAssembler[j] = m_array[j];
+        }
+        arrayAssembler[Count - 1] = item;
+        m_array = arrayAssembler;
     }
 
     public void Insert(Int32 index, TItem item)
@@ -55,42 +57,44 @@ public class MyList<TItem> : IEnumerable<TItem>
             Console.WriteLine("Индекс за границами промежутка");
             return;
         }
-        if (Count == m_array.Length)
-		{
-			Array.Resize(ref m_array, 1 + m_array.Length * 2);
-		}
-        for(int i = Count; i > index; i--)
+        TItem[] arrayAssembler = new TItem[++Count];
+        for (int j = 0; j < index; j++)
         {
-            m_array[i] = m_array[i - 1];
+            arrayAssembler[j] = m_array[j];
         }
-        m_array[index] = item;
-        Count++;
+        arrayAssembler[index] = item;
+        for (int j = index + 1; j < Count; j++)
+        {
+            arrayAssembler[j] = m_array[j - 1];
+        }
+        m_array = arrayAssembler;
+        return;
     }
 
-    public void InsertRange(Int32 index, TItem[] arrayData)
+    public void InsertRange(Int32 index, System.Collections.Generic.IEnumerable<TItem> arrayData)
     {
         if(index < 0 || index > Count)
         {
             Console.WriteLine("Индекс за границами промежутка");
             return;
         }
-
-        int arrayDataLenght = arrayData.Length;
-
-        if (Count + arrayDataLenght >= m_array.Length)
-		{
-			Array.Resize(ref m_array, m_array.Length + arrayDataLenght);
-		}
-        
-        for(int i = Count + arrayDataLenght - 1, j = Count - 1; i >= index + arrayDataLenght; i--, j--)
+        TItem[] DataArray = arrayData.ToArray<TItem>();
+        Count += DataArray.Length;
+        TItem[] arrayAssembler = new TItem[Count];
+        for (int j = 0; j < index; j++)
         {
-            m_array[i] = m_array[j];
+            arrayAssembler[j] = m_array[j];
         }
-        for(int i = index, j = 0; j < arrayDataLenght; i++, j++)
+        for (int j = index, i = 0; i < DataArray.Length; j++, i++)
         {
-            m_array[i] = arrayData[j];
+            arrayAssembler[j] = DataArray[i];
         }
-        Count += arrayDataLenght;
+        for (int j = index + DataArray.Length, i = index; j < Count; j++, i++)
+        {
+            arrayAssembler[j] = m_array[i];
+        }
+        m_array = arrayAssembler;
+        return;
     }
 
     public void Remove(TItem item)
@@ -99,11 +103,18 @@ public class MyList<TItem> : IEnumerable<TItem>
         {
             if(Comparer<TItem>.Default.Compare(m_array[i], item) == 0)
                 {
-                    for(int j = i; j < Count; j++)
+                    TItem[] arrayAssembler = new TItem[--Count];
+                    for (int j = 0; j < i; j++)
                     {
-                        m_array[j] = m_array[j + 1];
+                        arrayAssembler[j] = m_array[j];
                     }
-                    Count--;
+                    for (int j = i; j < Count; j++)
+                    {
+                        arrayAssembler[j] = m_array[j + 1];
+                    }
+
+                    
+                    m_array = arrayAssembler;
                     return;
                 }
         }
@@ -111,21 +122,28 @@ public class MyList<TItem> : IEnumerable<TItem>
 
     public void RemoveAt(int index)
     {
-        if(index < 0 || index >= Count)
+        if(index < 0 || index > Count)
         {
             Console.WriteLine("Индекс за границами промежутка");
             return;
         }
-		for (int i = index; i < Count; i++)
-		{
-			m_array[i] = m_array[i + 1];
-		}
-        Count--;
+        TItem[] arrayAssembler = new TItem[--Count];
+        for (int j = 0; j < index; j++)
+        {
+            arrayAssembler[j] = m_array[j];
+        }
+        for (int j = index; j < Count; j++)
+        {
+            arrayAssembler[j] = m_array[j + 1];
+        }
+        m_array = arrayAssembler;
+        return;
     }
 
     public void Clear()
     {
             Count = 0;
+            m_array = new TItem[Count];
     }
 
     public bool Contains(TItem item)
@@ -157,7 +175,7 @@ public class MyList<TItem> : IEnumerable<TItem>
 
     public IEnumerator<TItem> GetEnumerator()
     {
-        for (int i = 0; i< Count; i++)
+        for (int i = 0; i< m_array.Length; i++)
         {
             yield return m_array[i];
         }
