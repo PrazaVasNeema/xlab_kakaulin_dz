@@ -16,7 +16,7 @@ public static class QuickSort<T>
                 temp = array[i];
                 array[i] = array[less];
                 array[less] = temp;
-              ++less;
+                less++;
             }
         }
         temp = array[less];
