@@ -99,9 +99,11 @@ public class MyList<TItem> : IEnumerable<TItem>
         {
             if(Comparer<TItem>.Default.Compare(m_array[i], item) == 0)
                 {
-                    for(int j = i; j < Count; j++)
-                    {
-                        m_array[j] = m_array[j + 1];
+                    if(i != Count - 1){
+                    for(int j = i; j < Count - 1; j++)
+                        {
+                            m_array[j] = m_array[j + 1];
+                        }
                     }
                     Count--;
                     return;
