@@ -15,9 +15,10 @@ public class Worker
     private WorkerState m_state;
     private Dictionary<WorkerState, BaseWorkerState> m_states = new Dictionary<WorkerState, BaseWorkerState>();
 
-    public int placeIndex {get; set}
+    public int placeIndex {get; set;}
     private int finances;
     private float workerWalkingSpeed;
+    private float CurrentStateEnterTime;
 
 
     public Worker()
@@ -32,6 +33,7 @@ public class Worker
 
         finances = 0;
         workerWalkingSpeed = 1;
+        CurrentStateEnterTime = Time.time;
     }
 
     public void ChangePlace()
@@ -41,13 +43,14 @@ public class Worker
     public void ChangeState(WorkerState state)
     {
         m_state = state;
+        CurrentStateEnterTime = Time.time;
     }
 
     public void ChangeFinancialSituation()
     {
-        if(Mathf.Abs(finances) > 100)
+        if(Time.time - CurrentStateEnterTime < 10f)
         {
-            finances += time.deltaTime * place[placeIndex].moneyChangingRate;
+            finances += Time.deltaTime * place[placeIndex].moneyChangingRate;
         }
         else
         {

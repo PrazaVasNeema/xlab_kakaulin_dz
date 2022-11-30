@@ -8,6 +8,13 @@
             }
             public override void Ill()
             {
-                m_worker.ChangeState(WorkerState.Move);
+                if(m_worker.placeIndex != 0)
+                {
+                    m_worker.ChangeState(WorkerState.Move);
+                }
+                else
+                {
+                    m_worker.ChangeFinancialSituation();
+                }
             }
     }
